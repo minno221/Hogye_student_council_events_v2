@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  // Vercel Postgres / Supabase / PlanetScale 등 아무 Postgres/MySQL이나 사용 가능
+  // .env 파일의 DATABASE_URL 값만 바꿔주면 됨
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  title       String // 행사 제목
+  description String // 행사 설명
+  naverFormUrl String  // 학생회가 만든 네이버폼 링크
+    imageUrl    String?  // 행사 사진 URL (선택사항)
+  isActive    Boolean  @default(true) // 진행중 여부 (true: 진행중, false: 마감)
+  startDate   DateTime? // 시작일 (선택)
+  endDate     DateTime? // 마감일 (선택)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
